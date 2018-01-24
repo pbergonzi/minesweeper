@@ -66,6 +66,8 @@ app.post('/games', (req, res) => {
     game.height = parseInt(req.body.height);
     game.width = parseInt(req.body.width);
     game.mines = parseInt(req.body.mines);
+    //firebase db doesn't support dates
+    game.startDate = new Date().getTime();
     
     game.board = generateBoard(game.height, game.width, game.mines);
 
