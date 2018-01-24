@@ -1,0 +1,20 @@
+{
+  "hosting": {
+    "public": "./public",
+    "ignore": [
+      "firebase.json",
+      "database-rules.json",
+      "storage.rules",
+      "functions"
+    ],
+    "rewrites": [
+      {
+        "source":"**",
+        "function":"app"
+      }
+    ]
+  },
+  "functions": {
+    "source": "functions"
+  }
+}
