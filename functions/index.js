@@ -7,8 +7,6 @@ const express = require('express');
 const cors = require('cors')({origin: true});
 const app = express();
 
-const dbUrl = "https://minesweeper-8dd52.firebaseio.com";
-
 /**
  * Server set up validation filter and routes
  */
@@ -48,3 +46,110 @@ app.use(validateFirebaseIdToken);
 app.get('/hello', (req, res) => {
   res.send(`Hello ${req.user.name}`);
 });
+
+//new game
+app.post('/games', (req, res) => {    
+    const game = {};
+    
+    game.height = 6;
+    game.width = 6;
+    game.mines = 10;
+
+    console.log(req.body.height);
+    
+    game.board = generateBoard(game.height, game.width, game.mines);
+
+    game.id = saveGame(req.user, game);
+
+    res.send(printGame(game));
+});
+
+exports.app = functions.https.onRequest(app);
+
+/**
+ * Game Logic
+ */
+
+const generateBoard = (height, width, mines) => {
+    const board = [];
+    for(let y=0; y<height; y++){
+        board[y] = [];
+        for(let x=0; x<width; x++){
+            board[y].push(generateEmptyCell(x,y));  
+        }
+    }
+
+    generateMines(board, mines);
+
+    return board;
+};
+
+const generateMines = (board, mines) => {
+    const tempBoard = [].concat(...board);
+    
+    for(let m=0; m<mines; m++){
+        const pos = getRandom(tempBoard.length);
+        const ry = tempBoard[pos].y;
+        const rx = tempBoard[pos].x;
+
+        const cell = board[ry][rx];
+        cell.hasMine = true;
+        //remove the cell to avoid infinite iterations
+        tempBoard.splice(pos, 1);
+    }
+
+}
+
+const generateEmptyCell = (x,y) => {
+    return {
+        x: x,
+        y: y,
+        hasMine: false,
+        hasQuestionMark: false,
+        hasFlag: false,
+        isOpen: false,
+        number:0    
+    }   
+}
+
+const getRandom = (max) => {
+    return Math.floor(Math.random() * Math.floor(max)); 
+};
+
+const printGame = (game) => {
+    let strBoard = '<html><body>';
+
+    strBoard += `GameId : ${game.id} <br>`;
+
+    for(let y=0; y<game.height; y++){
+        for(let x=0; x<game.width; x++){
+            let cell = game.board[y][x];
+            if(cell.hasMine){
+                strBoard += '*';    
+            } else if (cell.hasFlag){
+                strBoard += 'F';
+            } else if (cell.hasQuestionMark){
+                strBoard += '?';
+            } else if (cell.isOpen){
+                strBoard += cell.number;
+            } else if (!cell.isOpen){
+                strBoard += 'C';
+            } 
+        }
+        strBoard += '<br>';
+    }
+
+    strBoard += '</body></html>'
+    return strBoard;
+}
+
+/**
+ * Saves the new game and returns the generated game id
+ * @param {*} user 
+ * @param {*} game
+ */
+const saveGame = (user, game) => { return admin.database().ref(`/users/${user.uid}/games`).push(game).key }
+
+
+
+
