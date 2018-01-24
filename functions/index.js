@@ -4,6 +4,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors')({origin: true});
 const app = express();
 
@@ -41,6 +42,7 @@ const validateFirebaseIdToken = (req, res, next) => {
 
 app.use(cors);
 app.use(validateFirebaseIdToken);
+app.use(bodyParser.json());
 
 // just to test if the token is resolved
 app.get('/hello', (req, res) => {
@@ -51,11 +53,9 @@ app.get('/hello', (req, res) => {
 app.post('/games', (req, res) => {    
     const game = {};
     
-    game.height = 6;
-    game.width = 6;
-    game.mines = 10;
-
-    console.log(req.body.height);
+    game.height = parseInt(req.body.height);
+    game.width = parseInt(req.body.width);
+    game.mines = parseInt(req.body.mines);
     
     game.board = generateBoard(game.height, game.width, game.mines);
 
