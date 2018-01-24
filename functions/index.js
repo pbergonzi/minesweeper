@@ -49,6 +49,16 @@ app.get('/hello', (req, res) => {
   res.send(`Hello ${req.user.name}`);
 });
 
+//get game
+app.get('/games/:id', (req, res) => {
+    getGame(req.user, req.params.id).then( snapshot => {
+        const game = snapshot.val();
+        //just for the print and debugging purposes
+        game.id = req.params.id;
+        res.send(printGame(game));
+    });
+});
+
 //new game
 app.post('/games', (req, res) => {    
     const game = {};
@@ -150,6 +160,14 @@ const printGame = (game) => {
  */
 const saveGame = (user, game) => { return admin.database().ref(`/users/${user.uid}/games`).push(game).key }
 
-
+/**
+ * Get game by id : returns a promise
+ * @param {*} user 
+ * @param {*} gameId 
+ */
+const getGame = (user, gameId) => {
+    const gameRef = admin.database().ref().child(`/users/${user.uid}/games/${gameId}`);
+    return gameRef.once('value');
+}
 
 
