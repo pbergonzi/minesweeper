@@ -95,6 +95,42 @@ app.patch('/games/:id/cells', (req, res) => {
     });
 });
 
+//set flag
+app.patch('/games/:id/flags', (req, res) => {    
+    const x = parseInt(req.body.x);
+    const y = parseInt(req.body.y);
+    
+    getGame(req.user, req.params.id).then( snapshot => {
+        const game = snapshot.val();
+        //just for the print and debugging purposes
+        game.id = req.params.id;
+        
+        setFlag(game, x, y);
+        
+        updateGame(req.user, game);
+        
+        res.send(printGame(game));
+    });
+});
+
+//set flag
+app.patch('/games/:id/marks', (req, res) => {    
+    const x = parseInt(req.body.x);
+    const y = parseInt(req.body.y);
+    
+    getGame(req.user, req.params.id).then( snapshot => {
+        const game = snapshot.val();
+        //just for the print and debugging purposes
+        game.id = req.params.id;
+        
+        setMark(game, x, y);
+        
+        updateGame(req.user, game);
+        
+        res.send(printGame(game));
+    });
+});
+
 exports.app = functions.https.onRequest(app);
 
 /**
@@ -241,6 +277,36 @@ const openCell = (game, x, y) => {
         freeArea(game, cell);
         return 'OK';
     }
+};
+
+/**
+ * Updates the question mark switch (on/off) on a cell at the specified coordinates and returns the updated json data about the game.
+ * It overrides any other tag on the cell.
+ * @param {*} x 
+ * @param {*} y
+ */
+const setMark = (game, x, y) => {
+    const cell = game.board[y][x];
+    
+    if(!cell.isOpen){
+        cell.hasFlag = false;
+        cell.hasQuestionMark = !cell.hasQuestionMark; 
+    }    
+};
+
+/**
+ * Updates the flag switch (on/off) on a cell at the specified coordinates and returns the updated json data about the game.
+ * It overrides any other tag on the cell.
+ * @param {*} x 
+ * @param {*} y
+ */
+const setFlag = (game, x, y) => {
+    const cell = game.board[y][x];
+    
+    if(!cell.isOpen){
+        cell.hasQuestionMark = false;
+        cell.hasFlag = !cell.hasFlag; 
+    }    
 };
 
 /**
