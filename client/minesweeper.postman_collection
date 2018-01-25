@@ -1,0 +1,162 @@
+{
+	"variables": [],
+	"info": {
+		"name": "minesweeper",
+		"_postman_id": "78702f43-6ff7-f3eb-0511-71ce9a0836de",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "check token",
+			"request": {
+				"url": "https://us-central1-minesweeper-8dd52.cloudfunctions.net/app/hello",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImMyYjEzNjg3ZTUxNDliZTMyOGY5OTI3MmYzY2NlZTU3NzY0NmE2NDAifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbWluZXN3ZWVwZXItOGRkNTIiLCJuYW1lIjoiUGFibG8gQmVyZ29uemkiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ONEQyc20yVEF1ay9BQUFBQUFBQUFBSS9BQUFBQUFBQUJSZy84cGFvZEZGMlRWcy9waG90by5qcGciLCJhdWQiOiJtaW5lc3dlZXBlci04ZGQ1MiIsImF1dGhfdGltZSI6MTUxNjgxODM2MSwidXNlcl9pZCI6IkV4R2Y3WG5xbGxhVzBBdGc0MzZjTnpDVkxoazIiLCJzdWIiOiJFeEdmN1hucWxsYVcwQXRnNDM2Y056Q1ZMaGsyIiwiaWF0IjoxNTE2ODE4MzYxLCJleHAiOjE1MTY4MjE5NjEsImVtYWlsIjoicGFibG9iZXJnb256aUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjEwMzM1NDEzMzg1MjQ2NTA2MTg2NiJdLCJlbWFpbCI6WyJwYWJsb2JlcmdvbnppQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.vdT2JwZPQJFLV4E_a24GIAg1qP8Ct354LhYV0P3sVc8MQ6B2k63RxM3q6kD8dRXP4ty4NDukPtqsfoW6HWr0fzoU__D9-ZG7SkQDnqkfJw9Tq1li2_XOyF1STrf3EhKgtBXPpteIx3otrVIEM4KO5BctbynUFu7MbomzG_hS84MAyeqU5yod_z3jMHPCZvkCBvbZE-2_6q5vFIHlGk5hV19xUyuzzc8FWSoy2mpjKmRg2fuqKLQhbSOeVt3oqrYLtlnOnu8zfP4Dg7CzD4ajdrLM5U-g5NPeK9hou8It1E9PCL3eH7BPSFOJiFe4d3xl6LvII6f8Y9gE6lNf8H7lFw",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "creates a neew game for a specific user, remember to add the bearer token to the request"
+			},
+			"response": []
+		},
+		{
+			"name": "new game",
+			"request": {
+				"url": "https://us-central1-minesweeper-8dd52.cloudfunctions.net/app/games",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImMyYjEzNjg3ZTUxNDliZTMyOGY5OTI3MmYzY2NlZTU3NzY0NmE2NDAifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbWluZXN3ZWVwZXItOGRkNTIiLCJuYW1lIjoiUGFibG8gQmVyZ29uemkiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ONEQyc20yVEF1ay9BQUFBQUFBQUFBSS9BQUFBQUFBQUJSZy84cGFvZEZGMlRWcy9waG90by5qcGciLCJhdWQiOiJtaW5lc3dlZXBlci04ZGQ1MiIsImF1dGhfdGltZSI6MTUxNjg0MzU3NCwidXNlcl9pZCI6IkV4R2Y3WG5xbGxhVzBBdGc0MzZjTnpDVkxoazIiLCJzdWIiOiJFeEdmN1hucWxsYVcwQXRnNDM2Y056Q1ZMaGsyIiwiaWF0IjoxNTE2ODQzNTc0LCJleHAiOjE1MTY4NDcxNzQsImVtYWlsIjoicGFibG9iZXJnb256aUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjEwMzM1NDEzMzg1MjQ2NTA2MTg2NiJdLCJlbWFpbCI6WyJwYWJsb2JlcmdvbnppQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.uPBiRJgj5eMWMDeOuaxGncU3M_O-fk10DCsAoPYSpupjeyP65EazNg-DKBkMuWBB-FjWgB6TscyTh-UCmse6F5TkBwXMQmnVZxr4arTsOe9y-u7RfpcI_F9rOm52k-3gSVfBoRN20CnXQKJ3yXiFfQp-8ptgM7AnwWmMMPrz97NiM1_LflmFkgCVMjgbYeEsc7Ja4UV7edOoLVwakRznoMk_Z3FIs88CUMD0q55J2XYaQKwGDY_EHMrBO665BvBT0W28yUexxQltNG0BwxIgUPZh9cv7EzIsrexzWmZ_FEjSriLAWovhxkhfBza0BQ6eQrxkoiyKwNpNP5bbaR2lfg",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"height\": 6,\n\t\"width\": 6,\n\t\"mines\": 10\n}"
+				},
+				"description": "creates a new game for a specific user, remember to add the bearer token to the request"
+			},
+			"response": []
+		},
+		{
+			"name": "open cell",
+			"request": {
+				"url": "https://us-central1-minesweeper-8dd52.cloudfunctions.net/app/games/-L3f0vhQut3mzME4ckjr/cells",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImMyYjEzNjg3ZTUxNDliZTMyOGY5OTI3MmYzY2NlZTU3NzY0NmE2NDAifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbWluZXN3ZWVwZXItOGRkNTIiLCJuYW1lIjoiUGFibG8gQmVyZ29uemkiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ONEQyc20yVEF1ay9BQUFBQUFBQUFBSS9BQUFBQUFBQUJSZy84cGFvZEZGMlRWcy9waG90by5qcGciLCJhdWQiOiJtaW5lc3dlZXBlci04ZGQ1MiIsImF1dGhfdGltZSI6MTUxNjg0MzU3NCwidXNlcl9pZCI6IkV4R2Y3WG5xbGxhVzBBdGc0MzZjTnpDVkxoazIiLCJzdWIiOiJFeEdmN1hucWxsYVcwQXRnNDM2Y056Q1ZMaGsyIiwiaWF0IjoxNTE2ODQzNTc0LCJleHAiOjE1MTY4NDcxNzQsImVtYWlsIjoicGFibG9iZXJnb256aUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjEwMzM1NDEzMzg1MjQ2NTA2MTg2NiJdLCJlbWFpbCI6WyJwYWJsb2JlcmdvbnppQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.uPBiRJgj5eMWMDeOuaxGncU3M_O-fk10DCsAoPYSpupjeyP65EazNg-DKBkMuWBB-FjWgB6TscyTh-UCmse6F5TkBwXMQmnVZxr4arTsOe9y-u7RfpcI_F9rOm52k-3gSVfBoRN20CnXQKJ3yXiFfQp-8ptgM7AnwWmMMPrz97NiM1_LflmFkgCVMjgbYeEsc7Ja4UV7edOoLVwakRznoMk_Z3FIs88CUMD0q55J2XYaQKwGDY_EHMrBO665BvBT0W28yUexxQltNG0BwxIgUPZh9cv7EzIsrexzWmZ_FEjSriLAWovhxkhfBza0BQ6eQrxkoiyKwNpNP5bbaR2lfg",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"x\": 2,\n\t\"y\": 4\n}"
+				},
+				"description": "opens a cell at the specified x,y coordinates in the game"
+			},
+			"response": []
+		},
+		{
+			"name": "set flag",
+			"request": {
+				"url": "https://us-central1-minesweeper-8dd52.cloudfunctions.net/app/games/-L3e_nUFXokBrcIrcLyA/flags",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImMyYjEzNjg3ZTUxNDliZTMyOGY5OTI3MmYzY2NlZTU3NzY0NmE2NDAifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbWluZXN3ZWVwZXItOGRkNTIiLCJuYW1lIjoiUGFibG8gQmVyZ29uemkiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ONEQyc20yVEF1ay9BQUFBQUFBQUFBSS9BQUFBQUFBQUJSZy84cGFvZEZGMlRWcy9waG90by5qcGciLCJhdWQiOiJtaW5lc3dlZXBlci04ZGQ1MiIsImF1dGhfdGltZSI6MTUxNjg0MzU3NCwidXNlcl9pZCI6IkV4R2Y3WG5xbGxhVzBBdGc0MzZjTnpDVkxoazIiLCJzdWIiOiJFeEdmN1hucWxsYVcwQXRnNDM2Y056Q1ZMaGsyIiwiaWF0IjoxNTE2ODQzNTc0LCJleHAiOjE1MTY4NDcxNzQsImVtYWlsIjoicGFibG9iZXJnb256aUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjEwMzM1NDEzMzg1MjQ2NTA2MTg2NiJdLCJlbWFpbCI6WyJwYWJsb2JlcmdvbnppQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.uPBiRJgj5eMWMDeOuaxGncU3M_O-fk10DCsAoPYSpupjeyP65EazNg-DKBkMuWBB-FjWgB6TscyTh-UCmse6F5TkBwXMQmnVZxr4arTsOe9y-u7RfpcI_F9rOm52k-3gSVfBoRN20CnXQKJ3yXiFfQp-8ptgM7AnwWmMMPrz97NiM1_LflmFkgCVMjgbYeEsc7Ja4UV7edOoLVwakRznoMk_Z3FIs88CUMD0q55J2XYaQKwGDY_EHMrBO665BvBT0W28yUexxQltNG0BwxIgUPZh9cv7EzIsrexzWmZ_FEjSriLAWovhxkhfBza0BQ6eQrxkoiyKwNpNP5bbaR2lfg",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"x\": 1,\n\t\"y\": 1\n}"
+				},
+				"description": "sets a flag at the specific x,y coordinates"
+			},
+			"response": []
+		},
+		{
+			"name": "set mark",
+			"request": {
+				"url": "https://us-central1-minesweeper-8dd52.cloudfunctions.net/app/games/-L3e_nUFXokBrcIrcLyA/flags",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImMyYjEzNjg3ZTUxNDliZTMyOGY5OTI3MmYzY2NlZTU3NzY0NmE2NDAifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbWluZXN3ZWVwZXItOGRkNTIiLCJuYW1lIjoiUGFibG8gQmVyZ29uemkiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ONEQyc20yVEF1ay9BQUFBQUFBQUFBSS9BQUFBQUFBQUJSZy84cGFvZEZGMlRWcy9waG90by5qcGciLCJhdWQiOiJtaW5lc3dlZXBlci04ZGQ1MiIsImF1dGhfdGltZSI6MTUxNjg0MzU3NCwidXNlcl9pZCI6IkV4R2Y3WG5xbGxhVzBBdGc0MzZjTnpDVkxoazIiLCJzdWIiOiJFeEdmN1hucWxsYVcwQXRnNDM2Y056Q1ZMaGsyIiwiaWF0IjoxNTE2ODQzNTc0LCJleHAiOjE1MTY4NDcxNzQsImVtYWlsIjoicGFibG9iZXJnb256aUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjEwMzM1NDEzMzg1MjQ2NTA2MTg2NiJdLCJlbWFpbCI6WyJwYWJsb2JlcmdvbnppQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.uPBiRJgj5eMWMDeOuaxGncU3M_O-fk10DCsAoPYSpupjeyP65EazNg-DKBkMuWBB-FjWgB6TscyTh-UCmse6F5TkBwXMQmnVZxr4arTsOe9y-u7RfpcI_F9rOm52k-3gSVfBoRN20CnXQKJ3yXiFfQp-8ptgM7AnwWmMMPrz97NiM1_LflmFkgCVMjgbYeEsc7Ja4UV7edOoLVwakRznoMk_Z3FIs88CUMD0q55J2XYaQKwGDY_EHMrBO665BvBT0W28yUexxQltNG0BwxIgUPZh9cv7EzIsrexzWmZ_FEjSriLAWovhxkhfBza0BQ6eQrxkoiyKwNpNP5bbaR2lfg",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"x\": 1,\n\t\"y\": 1\n}"
+				},
+				"description": "sets a question mark (?) at the specific x,y coordinates"
+			},
+			"response": []
+		},
+		{
+			"name": "get game",
+			"request": {
+				"url": "https://us-central1-minesweeper-8dd52.cloudfunctions.net/app/games/-L3f7Ml7Vj_9iDdXK8EX",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImMyYjEzNjg3ZTUxNDliZTMyOGY5OTI3MmYzY2NlZTU3NzY0NmE2NDAifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbWluZXN3ZWVwZXItOGRkNTIiLCJuYW1lIjoiUGFibG8gQmVyZ29uemkiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ONEQyc20yVEF1ay9BQUFBQUFBQUFBSS9BQUFBQUFBQUJSZy84cGFvZEZGMlRWcy9waG90by5qcGciLCJhdWQiOiJtaW5lc3dlZXBlci04ZGQ1MiIsImF1dGhfdGltZSI6MTUxNjg0NzI5OCwidXNlcl9pZCI6IkV4R2Y3WG5xbGxhVzBBdGc0MzZjTnpDVkxoazIiLCJzdWIiOiJFeEdmN1hucWxsYVcwQXRnNDM2Y056Q1ZMaGsyIiwiaWF0IjoxNTE2ODQ3Mjk4LCJleHAiOjE1MTY4NTA4OTgsImVtYWlsIjoicGFibG9iZXJnb256aUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjEwMzM1NDEzMzg1MjQ2NTA2MTg2NiJdLCJlbWFpbCI6WyJwYWJsb2JlcmdvbnppQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.B2dvxgo6UqSZLTgKUWJxo0RVm_M5a5is_9K5D75dpYf7MIs-y9yIi6eJqLtb2csZFBpL30px1Vvjf6y_sjlCfvO-2bqX53bt1IiL55tsPuvk6kq-bsuuI3AuAlUzqd_x7Pr7xTcljugbrkEYNv_UR07bgnbh4TFVsOsxDykBu0RzTWLxIUCugWrETF5YBAvNFcYg8TEsCgpLnznof3ytLbIUZgltogxJ--MX8Yms1x9Bx-DRXUNEvkdDgoU14KC0HSgirJoFlyjBIuLRtPzm5AwgF2hRakgpphu0xWAUyA-yvB50jBaVnwfJoYU7HEG4XbT3ULK_M-TlRVEFKi_dlw",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "obtains an existing game"
+			},
+			"response": []
+		},
+		{
+			"name": "get game as html",
+			"request": {
+				"url": "https://us-central1-minesweeper-8dd52.cloudfunctions.net/app/games/-L3f7Ml7Vj_9iDdXK8EX/readable",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImMyYjEzNjg3ZTUxNDliZTMyOGY5OTI3MmYzY2NlZTU3NzY0NmE2NDAifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbWluZXN3ZWVwZXItOGRkNTIiLCJuYW1lIjoiUGFibG8gQmVyZ29uemkiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1ONEQyc20yVEF1ay9BQUFBQUFBQUFBSS9BQUFBQUFBQUJSZy84cGFvZEZGMlRWcy9waG90by5qcGciLCJhdWQiOiJtaW5lc3dlZXBlci04ZGQ1MiIsImF1dGhfdGltZSI6MTUxNjg0NzI5OCwidXNlcl9pZCI6IkV4R2Y3WG5xbGxhVzBBdGc0MzZjTnpDVkxoazIiLCJzdWIiOiJFeEdmN1hucWxsYVcwQXRnNDM2Y056Q1ZMaGsyIiwiaWF0IjoxNTE2ODQ3Mjk4LCJleHAiOjE1MTY4NTA4OTgsImVtYWlsIjoicGFibG9iZXJnb256aUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjEwMzM1NDEzMzg1MjQ2NTA2MTg2NiJdLCJlbWFpbCI6WyJwYWJsb2JlcmdvbnppQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.B2dvxgo6UqSZLTgKUWJxo0RVm_M5a5is_9K5D75dpYf7MIs-y9yIi6eJqLtb2csZFBpL30px1Vvjf6y_sjlCfvO-2bqX53bt1IiL55tsPuvk6kq-bsuuI3AuAlUzqd_x7Pr7xTcljugbrkEYNv_UR07bgnbh4TFVsOsxDykBu0RzTWLxIUCugWrETF5YBAvNFcYg8TEsCgpLnznof3ytLbIUZgltogxJ--MX8Yms1x9Bx-DRXUNEvkdDgoU14KC0HSgirJoFlyjBIuLRtPzm5AwgF2hRakgpphu0xWAUyA-yvB50jBaVnwfJoYU7HEG4XbT3ULK_M-TlRVEFKi_dlw",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": "obtains an existing game in a readable format"
+			},
+			"response": []
+		}
+	]
+}
