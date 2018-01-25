@@ -69,6 +69,7 @@ app.post('/games', (req, res) => {
     game.mines = parseInt(req.body.mines);
     //firebase db doesn't support dates
     game.startDate = new Date().getTime();
+    game.openCells = 0;
     
     game.board = generateBoard(game.height, game.width, game.mines);
 
@@ -179,9 +180,7 @@ const generateEmptyCell = (x,y) => {
     }   
 }
 
-const getRandom = (max) => {
-    return Math.floor(Math.random() * Math.floor(max)); 
-};
+const getRandom = (max) => Math.floor(Math.random() * Math.floor(max));
 
 const printGame = (game) => {
     let strBoard = '<html><body>';
@@ -240,6 +239,7 @@ const getNeighbours = (game, cell) => {
 
 const freeArea = (game, cell) => {
     cell.isOpen = true;
+    game.openCells++;    
 
     const area = getNeighbours(game, cell);
     
@@ -264,6 +264,9 @@ const freeArea = (game, cell) => {
     }
 };
 
+//the game ends when you opened all the cells that doesn't contain a mine
+const isGameFinished = (game) => (game.height * game.width) - game.openCells === game.mines;
+
 /**
  * Attempts to open a cell at x,y coordinates, it returns status 'OK' if it's not a mine and 'BOOM' if it's a mine
  * @param {*} x 
@@ -271,11 +274,14 @@ const freeArea = (game, cell) => {
  */
 const openCell = (game, x, y) => {
     const cell = game.board[y][x];
+    //won't do anything if the cell is already open
+    if (cell.isOpen) { return 'OK' };
+
     if(cell.hasMine){
         return 'BOOM';
     }else {
         freeArea(game, cell);
-        return 'OK';
+        return (isGameFinished(game)) ? 'GAME OVER' : 'OK';             
     }
 };
 
@@ -314,17 +320,14 @@ const setFlag = (game, x, y) => {
  * @param {*} user 
  * @param {*} game
  */
-const saveGame = (user, game) => { return admin.database().ref(`/users/${user.uid}/games`).push(game).key }
+const saveGame = (user, game) => admin.database().ref(`/users/${user.uid}/games`).push(game).key;
 
 /**
  * Get game by id : returns a promise
  * @param {*} user 
  * @param {*} gameId 
  */
-const getGame = (user, gameId) => {
-    const gameRef = admin.database().ref().child(`/users/${user.uid}/games/${gameId}`);
-    return gameRef.once('value');
-}
+const getGame = (user, gameId) => admin.database().ref().child(`/users/${user.uid}/games/${gameId}`).once('value');
 
 /**
  * Updates the game
