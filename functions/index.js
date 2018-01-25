@@ -63,6 +63,7 @@ app.get('/games/:id', (req, res) => {
 app.post('/games', (req, res) => {    
     const game = {};
     
+    game.status = 'OK';
     game.height = parseInt(req.body.height);
     game.width = parseInt(req.body.width);
     game.mines = parseInt(req.body.mines);
@@ -74,6 +75,24 @@ app.post('/games', (req, res) => {
     game.id = saveGame(req.user, game);
 
     res.send(printGame(game));
+});
+
+//open cell
+app.patch('/games/:id/cells', (req, res) => {    
+    const x = parseInt(req.body.x);
+    const y = parseInt(req.body.y);
+    
+    getGame(req.user, req.params.id).then( snapshot => {
+        const game = snapshot.val();
+        //just for the print and debugging purposes
+        game.id = req.params.id;
+        
+        game.status = openCell(game, x, y);
+        
+        updateGame(req.user, game);
+        
+        res.send(printGame(game));
+    });
 });
 
 exports.app = functions.https.onRequest(app);
@@ -132,6 +151,7 @@ const printGame = (game) => {
     let strBoard = '<html><body>';
 
     strBoard += `GameId : ${game.id} <br>`;
+    strBoard += `Status : ${game.status} <br>`;
 
     for(let y=0; y<game.height; y++){
         for(let x=0; x<game.width; x++){
@@ -155,6 +175,74 @@ const printGame = (game) => {
     return strBoard;
 }
 
+const getNeighbours = (game, cell) => {
+    const neighbours = [];
+
+    const maxY = game.height;
+    const maxX = game.width;
+    const board = game.board;
+
+    //left
+    if (cell.x - 1 >= 0) neighbours.push(board[cell.y][cell.x-1]);
+    //right
+    if (cell.x + 1 < maxX) neighbours.push(board[cell.y][cell.x+1]);
+    //up
+    if (cell.y - 1 >= 0) neighbours.push(board[cell.y-1][cell.x]);
+    //down
+    if (cell.y + 1 < maxY) neighbours.push(board[cell.y+1][cell.x]);
+    //up-left
+    if ( (cell.y - 1 >= 0) && (cell.x - 1 >= 0)) neighbours.push(board[cell.y-1][cell.x-1]);
+    //up-right
+    if ( (cell.y - 1 >= 0) && (cell.x + 1 < maxX)) neighbours.push(board[cell.y-1][cell.x+1]);
+    //down-left
+    if ( (cell.y + 1 < maxY) && (cell.x - 1 >= 0)) neighbours.push(board[cell.y+1][cell.x-1]);
+    //down-right
+    if ( (cell.y + 1 < maxY) && (cell.x + 1 < maxX)) neighbours.push(board[cell.y+1][cell.x+1]);
+    
+    return neighbours;
+};
+
+const freeArea = (game, cell) => {
+    cell.isOpen = true;
+
+    const area = getNeighbours(game, cell);
+    
+    //calculate cell number
+    const contextMines = area.filter(n => n.hasMine).length;
+    
+    if(contextMines > 0){
+        //set number of near mines and stop
+        cell.number = contextMines;
+        return; 
+    } else {
+        //extend on neighbours that doesn't have mines or flags or question marks or were previously opened
+        const unknownNeighbours = area.filter(n => !n.hasMine && !n.hasFlag && !n.hasQuestionMark && !n.isOpen);
+        
+        if(unknownNeighbours.length > 0){
+            //recursive neighbour checking
+            unknownNeighbours.forEach(neighbourCell => freeArea(game, neighbourCell));
+        } else {
+            //no more neighbours so stop
+            return;
+        }
+    }
+};
+
+/**
+ * Attempts to open a cell at x,y coordinates, it returns status 'OK' if it's not a mine and 'BOOM' if it's a mine
+ * @param {*} x 
+ * @param {*} y
+ */
+const openCell = (game, x, y) => {
+    const cell = game.board[y][x];
+    if(cell.hasMine){
+        return 'BOOM';
+    }else {
+        freeArea(game, cell);
+        return 'OK';
+    }
+};
+
 /**
  * Saves the new game and returns the generated game id
  * @param {*} user 
@@ -171,5 +259,12 @@ const getGame = (user, gameId) => {
     const gameRef = admin.database().ref().child(`/users/${user.uid}/games/${gameId}`);
     return gameRef.once('value');
 }
+
+/**
+ * Updates the game
+ * @param {*} user 
+ * @param {*} game
+ */
+const updateGame = (user, game) => admin.database().ref().child(`/users/${user.uid}/games/${game.id}`).update(game);
 
 
