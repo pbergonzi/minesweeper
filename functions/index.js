@@ -44,7 +44,7 @@ app.use(cors);
 app.use(validateFirebaseIdToken);
 app.use(bodyParser.json());
 
-// just to test if the token is resolved
+// just to test if the token was correctly resolved
 app.get('/hello', (req, res) => {
   res.send(`Hello ${req.user.name}`);
 });
@@ -53,8 +53,18 @@ app.get('/hello', (req, res) => {
 app.get('/games/:id', (req, res) => {
     getGame(req.user, req.params.id).then( snapshot => {
         const game = snapshot.val();
-        //just for the print and debugging purposes
         game.id = req.params.id;
+        
+        res.send(game);
+    });
+});
+
+//get game in html format just for testing purposses
+app.get('/games/:id/readable', (req, res) => {
+    getGame(req.user, req.params.id).then( snapshot => {
+        const game = snapshot.val();
+        game.id = req.params.id;
+        
         res.send(printGame(game));
     });
 });
@@ -75,7 +85,7 @@ app.post('/games', (req, res) => {
 
     game.id = saveGame(req.user, game);
 
-    res.send(printGame(game));
+    res.send(game);
 });
 
 //open cell
@@ -85,14 +95,13 @@ app.patch('/games/:id/cells', (req, res) => {
     
     getGame(req.user, req.params.id).then( snapshot => {
         const game = snapshot.val();
-        //just for the print and debugging purposes
         game.id = req.params.id;
-        
+
         game.status = openCell(game, x, y);
         
         updateGame(req.user, game);
         
-        res.send(printGame(game));
+        res.send(game);
     });
 });
 
@@ -103,14 +112,13 @@ app.patch('/games/:id/flags', (req, res) => {
     
     getGame(req.user, req.params.id).then( snapshot => {
         const game = snapshot.val();
-        //just for the print and debugging purposes
         game.id = req.params.id;
         
         setFlag(game, x, y);
         
         updateGame(req.user, game);
         
-        res.send(printGame(game));
+        res.send(game);
     });
 });
 
@@ -121,14 +129,13 @@ app.patch('/games/:id/marks', (req, res) => {
     
     getGame(req.user, req.params.id).then( snapshot => {
         const game = snapshot.val();
-        //just for the print and debugging purposes
         game.id = req.params.id;
         
         setMark(game, x, y);
         
         updateGame(req.user, game);
         
-        res.send(printGame(game));
+        res.send(game);
     });
 });
 
@@ -183,20 +190,24 @@ const generateEmptyCell = (x,y) => {
 const getRandom = (max) => Math.floor(Math.random() * Math.floor(max));
 
 const printGame = (game) => {
+    const duration = (new Date().getTime() - parseFloat(game.startDate)) / 60000;
+
     let strBoard = '<html><body>';
 
-    strBoard += `GameId : ${game.id} <br>`;
-    strBoard += `Status : ${game.status} <br>`;
+    strBoard += `GameId : ${game.id}<br>`;
+    strBoard += `Status : ${game.status}<br>`;
+    strBoard += `Timer  : ${duration.toFixed(2)} mins<br>`;
 
     for(let y=0; y<game.height; y++){
         for(let x=0; x<game.width; x++){
             let cell = game.board[y][x];
-            if(cell.hasMine){
-                strBoard += '*';    
-            } else if (cell.hasFlag){
+            
+            if (cell.hasFlag){
                 strBoard += 'F';
             } else if (cell.hasQuestionMark){
                 strBoard += '?';
+            } else if(cell.hasMine){
+                strBoard += '*';    
             } else if (cell.isOpen){
                 strBoard += cell.number;
             } else if (!cell.isOpen){
