@@ -1,5 +1,15 @@
 # minesweeper api
 
+**How to use**
+- Log in with a google account using the web client, activate the log in dialog pressing the 'login with google button'
+- Print your token in the developer console by pressing the 'show auth token' button
+- Use your token to execute the postman requests collection into the /client folder
+
+* **Auth web client url**
+https://minesweeper-8dd52.firebaseapp.com
+* **Firebase functions base url**
+https://us-central1-minesweeper-8dd52.cloudfunctions.net/app
+
 **Show Active Games**
 ----
   Returns json data with all the active games ids for a specific user.
@@ -11,7 +21,11 @@
 * **Method:**
 
   `GET`
-  
+
+* **Headers**
+
+  Autorization: Bearer [your token]
+
 * **URL Params**
 
   None
@@ -47,14 +61,23 @@
 * **Method:**
 
   `POST`
-  
+
+* **Headers**
+
+  Autorization: Bearer [your token]
+  Content-Type: application/json
+
 * **URL Params**
 
   None
 
 * **Data Params**
 
-  None
+  {
+	  height: [integer],
+    width: [integer],
+	  mines: [integer]
+  }
 
 * **Success Response:**
 
@@ -78,12 +101,57 @@
 * **Method:**
 
   `GET`
-  
+
+* **Headers**
+
+  Autorization: Bearer [your token]
+
 * **URL Params**
 
   **Required:**
  
-  `id=[integer]`
+  `id=[string]`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{ id : 20, board : [[],[], ...] }`
+ 
+* **Error Response:**
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "The game doesn't exist" }`
+
+  OR
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+**Show Game In Readable Format**
+----
+  Returns html data about a specific game.
+
+* **URL**
+
+  /games/:id/readable
+
+* **Method:**
+
+  `GET`
+
+* **Headers**
+
+  Autorization: Bearer [your token]
+
+* **URL Params**
+
+  **Required:**
+ 
+  `id=[string]`
 
 * **Data Params**
 
@@ -116,12 +184,17 @@
 * **Method:**
 
   `PATCH`
-  
+
+* **Headers**
+
+  Autorization: Bearer [your token]
+  Content-Type: application/json
+
 * **URL Params**
 
   **Required:**
  
-  `id=[integer]`
+  `id=[string]`
 
 * **Data Params**
   
@@ -167,12 +240,17 @@
 * **Method:**
 
   `PATCH`
-  
+
+* **Headers**
+
+  Autorization: Bearer [your token]
+  Content-Type: application/json
+
 * **URL Params**
 
   **Required:**
  
-  `id=[integer]`
+  `id=[string]`
 
 * **Data Params**
   
@@ -218,12 +296,17 @@
 * **Method:**
 
   `PATCH`
-  
+
+* **Headers**
+
+  Autorization: Bearer [your token]
+  Content-Type: application/json
+
 * **URL Params**
 
   **Required:**
  
-  `id=[integer]`
+  `id=[string]`
 
 * **Data Params**
   
